@@ -1,16 +1,12 @@
 import argparse
-import logging
 import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # use regex to get first & last number, join them and return as int
 def get_calibration_value(input):
@@ -20,18 +16,19 @@ def get_calibration_value(input):
     calibration_value = int("{}{}".format(numbers[0], numbers[-1]))
     return calibration_value
 
+
 # process puzzle input file
 with open(args.filename) as file:
-    
-    #get calibration values
+
+    # get calibration values
     calibration_values = []
     for line in file:
         calibration_values.append(get_calibration_value(line.rstrip('\n')))
-    
-    #sum calibration values
+
+    # sum calibration values
     sum = 0
     for value in calibration_values:
         sum += value
-    
+
     # print answer
     print("The answer is {}!".format(sum))

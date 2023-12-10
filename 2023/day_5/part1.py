@@ -1,16 +1,12 @@
 import argparse
-import logging
 import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # return an array with the seeds
 def get_seeds(input):
@@ -21,6 +17,7 @@ def get_seeds(input):
         seeds.append(int(result))
     return seeds
 
+
 # process a map
 def get_map(input, name):
     results = re.search(r"{} map:\n((?:(?:\d| )+\n?)+)".format(name), input)
@@ -29,6 +26,7 @@ def get_map(input, name):
         numbers = [int(i) for i in re.findall(r"(\d+)", line)]
         map.append(numbers)
     return map
+
 
 def process_map(maps, seed):
     for map in maps:
@@ -45,14 +43,16 @@ def seed_to_location(map_data, seed):
         location = process_map(map_data[map_name], location)
     return location
 
+
 # process puzzle input file
 with open(args.filename) as file:
 
     input = file.read()
-        
+
     seeds = get_seeds(input)
 
-    map_names = ["seed", "soil", "fertilizer", "water", "light", "temperature", "humidity", "location"]
+    map_names = ["seed", "soil", "fertilizer", "water", "light", "temperature",
+                 "humidity", "location"]
 
     map_data = {}
     for i in range(0, len(map_names) - 1):

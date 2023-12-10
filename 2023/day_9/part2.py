@@ -1,15 +1,11 @@
 import argparse
-import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # calculate funnel values
 def calculate_funnel(input):
@@ -20,6 +16,7 @@ def calculate_funnel(input):
             data[-1].append(data[-2][i + 1] - data[-2][i])
     return data
 
+
 # calculate previous_ funnel value
 def calculate_previous_funnel_value(funnel):
     data = funnel
@@ -28,9 +25,11 @@ def calculate_previous_funnel_value(funnel):
         data[depth].insert(0, data[depth][0] - data[depth + 1][0])
     return data
 
+
 # process puzzle input file
 with open(args.filename) as file:
     input = file.read()
+
 
 # parse puzzles
 data = []

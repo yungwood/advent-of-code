@@ -1,16 +1,12 @@
 import argparse
-import logging
 import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # use regex to get game id & game data
 def parse_game_data(input):
@@ -20,8 +16,6 @@ def parse_game_data(input):
     data = parsed.group(2)
     # split data into games
     games = data.split("; ")
-    # parse each game
-    results = []
     # get highest of each colour from all games
     result = {
         "blue": 0,
@@ -38,6 +32,7 @@ def parse_game_data(input):
                 result[colour] = count
     return [id, result]
 
+
 # use regex to get first & last number, join them and return as int
 def get_calibration_value(input):
     # find all digits
@@ -46,10 +41,11 @@ def get_calibration_value(input):
     calibration_value = int("{}{}".format(numbers[0], numbers[-1]))
     return calibration_value
 
+
 # process puzzle input file
 with open(args.filename) as file:
-    
-    #get values
+
+    # get values
     sum = 0
     for line in file:
         parsed = parse_game_data(line)
@@ -62,6 +58,6 @@ with open(args.filename) as file:
         if results['red'] > 12:
             continue
         sum += parsed[0]
-    
+
     # print answer
     print("The answer is {}!".format(sum))

@@ -5,24 +5,24 @@ from math import lcm
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # process direction data
 def get_directions(input):
     results = re.search(r"([LR]+)", input)
     return list(map(lambda x: 0 if x == "L" else 1, [*results.group(0)]))
 
+
 # process location data
 def get_locations(input):
     data = {}
-    results = re.findall(r"([A-Z0-9]{3}) = \(([A-Z0-9]{3}), ([A-Z0-9]{3})\)", input)
+    pattern = r"([A-Z0-9]{3}) = \(([A-Z0-9]{3}), ([A-Z0-9]{3})\)"
+    results = re.findall(pattern, input)
     for result in results:
         data[result[0]] = [result[1], result[2]]
     return data
+
 
 # calculate steps for a ghost loop
 def calc_ghost_loop(start_location, direction_data):
@@ -35,10 +35,11 @@ def calc_ghost_loop(start_location, direction_data):
             current_location = location_data[current_location][direction]
     return count
 
+
 # process puzzle input file
 with open(args.filename) as file:
     input = file.read()
-    
+
 direction_data = get_directions(input)
 location_data = get_locations(input)
 

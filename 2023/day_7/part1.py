@@ -1,15 +1,11 @@
 import argparse
-import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # get card counts and determine type of hand
 def get_hand_type(hand):
@@ -43,6 +39,7 @@ def get_hand_type(hand):
             # highest card
             return 0
 
+
 # return a list with parsed game info
 def parse_game(input):
     result = input.split(" ")
@@ -53,6 +50,7 @@ def parse_game(input):
         result.append(cards.index(card))
     return result
 
+
 # process puzzle input file
 with open(args.filename) as file:
     games = []
@@ -61,7 +59,7 @@ with open(args.filename) as file:
 
     # sort all games from worst to best by hand_type then cards
     games.sort(key=lambda x: (x[2], x[3], x[4], x[5], x[6], x[7]))
-    
+
     # calculate answer
     sum = 0
     for rank, game in enumerate(games, start=1):

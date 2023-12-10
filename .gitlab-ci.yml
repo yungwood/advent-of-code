@@ -1,0 +1,12 @@
+default:
+  image: python:3.11
+
+stages:
+  - lint
+
+flake8:
+  stage: lint
+  script:
+    - python --version
+    - pip install flake8
+    - flake8 $(find 2023/ -name "*.py")

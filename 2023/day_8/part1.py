@@ -5,16 +5,14 @@ import re
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # process direction data
 def get_directions(input):
     results = re.search(r"([LR]+)", input)
     return [*results.group(0)]
+
 
 # process location data
 def get_locations(input):
@@ -23,6 +21,7 @@ def get_locations(input):
     for result in results:
         data[result[0]] = [result[1], result[2]]
     return data
+
 
 # process puzzle input file
 with open(args.filename) as file:

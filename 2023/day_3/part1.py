@@ -1,16 +1,12 @@
 import argparse
-import logging
 import re
 
 
 # parse script args
 parser = argparse.ArgumentParser(description='advent of code')
 parser.add_argument('filename', help='The file containing the puzzle input')
-try:
-    args = parser.parse_args()
-except:
-    print("Try using the -h option for more info")
-    exit(0)
+args = parser.parse_args()
+
 
 # return an array with location of each symbol on a line
 def get_symbols(input):
@@ -22,6 +18,7 @@ def get_symbols(input):
         symbols.append(match.start())
     return symbols
 
+
 # return a dict with each number match as key and span for value
 def get_numbers(input):
     # find all numbers
@@ -32,17 +29,16 @@ def get_numbers(input):
         numbers.append([match.group(), match.span()])
     return numbers
 
+
 # check if a number is located near a symbol
 def check_symbol_adjacent(symbols_map, line_no, span):
     # test line before number
     if line_no > 0:
-        #print(symbols_map[(line_no - 1)])
         for symbol_position in symbols_map[(line_no - 1)]:
             if symbol_position >= span[0] - 1 and symbol_position <= span[1]:
                 return True
 
     # test same line where number is located
-    #print(symbols_map[line_no])
     for symbol_position in symbols_map[line_no]:
         # if symbol is left of the number
         if symbol_position == span[0] - 1:
@@ -50,15 +46,15 @@ def check_symbol_adjacent(symbols_map, line_no, span):
         # if symbol is right of the number
         if symbol_position == span[1]:
             return True
-    
+
     # test line after number
     if line_no < len(symbols_map) - 1:
-        #print(symbols_map[(line_no + 1)])
         for symbol_position in symbols_map[(line_no + 1)]:
             if symbol_position >= span[0] - 1 and symbol_position <= span[1]:
                 return True
-    
+
     return False
+
 
 # process puzzle input file
 with open(args.filename) as file:
@@ -78,6 +74,6 @@ with open(args.filename) as file:
         for match in number_matches:
             if check_symbol_adjacent(symbols_map, line_no, match[1]):
                 sum += int(match[0])
-    
+
     # print answer
     print("The answer is {}!".format(sum))
