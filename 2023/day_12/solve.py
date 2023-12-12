@@ -19,13 +19,13 @@ def parse_data(input):
     return parsed
 
 
-# use cache to speed things up
+# find the number of possible solutions by looping through the input data
+# char by char using recursion at branch points (?) as required
+# use python cache decorator to speed things up
 @cache
 def get_solution_count(springs, groups):
 
     solution_count = 0
-
-    # print("get_solution_count({}, {})".format(springs, groups))
 
     # ignore '.'
     springs = springs.lstrip('.')
@@ -39,6 +39,7 @@ def get_solution_count(springs, groups):
             return 1
         return 0
 
+    # if no string left with groups
     if not springs:
         return 0
 
@@ -67,6 +68,7 @@ def get_solution_count(springs, groups):
         # if next char after group is '?' then we can only use '.'
         # strip off the current group and do it all again
         return get_solution_count('.' + springs[groups[0] + 1:], groups[1:])
+
     # we stripped all leading '.' so next char must be '?'
     # try both options
     solution_count += get_solution_count('#' + springs[1:], groups)
@@ -83,12 +85,12 @@ spring_data = parse_data(puzzle_input)
 
 # calculate answer for part 1
 answer = 0
-for index, item in enumerate(spring_data, 1):
+for item in spring_data:
     answer += get_solution_count(item[0], item[1])
 print("Than answer for part 1 is {}".format(answer))
 
 # calculate answer for part 2
 answer = 0
-for index, item in enumerate(spring_data, 1):
+for item in spring_data:
     answer += get_solution_count(((item[0] + '?') * 4) + item[0], item[1] * 5)
 print("Than answer for part 2 is {}".format(answer))
