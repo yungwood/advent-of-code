@@ -61,7 +61,7 @@ def main():
 
     # calculate answer for part 1
     answer = 0
-    for index, map_data in enumerate(parsed_map_data, 1):
+    for map_data in parsed_map_data:
         x_reflection = get_x_reflection(map_data, 0)
         if x_reflection:
             answer += x_reflection
@@ -74,7 +74,7 @@ def main():
 
     # calculate answer for part 2
     answer = 0
-    for index, map_data in enumerate(parsed_map_data, 1):
+    for map_data in parsed_map_data:
         x_reflection = get_x_reflection(map_data, 1)
         if x_reflection:
             answer += x_reflection
