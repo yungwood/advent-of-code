@@ -1,4 +1,5 @@
 import argparse
+import time
 
 
 # parse data to list of lists
@@ -46,6 +47,20 @@ def validate_y_reflection(y, map_data, smudges):
     return False
 
 
+def get_answer(parsed_map_data, smudges):
+    answer = 0
+    for map_data in parsed_map_data:
+        x_reflection = get_x_reflection(map_data, smudges)
+        if x_reflection:
+            answer += x_reflection
+            continue
+        y_reflection = get_y_reflection(map_data, smudges)
+        if y_reflection:
+            answer += y_reflection * 100
+            continue
+    return answer
+
+
 def main():
     # parse script args
     parser = argparse.ArgumentParser(description='Advent of Code 2023: Day 13')
@@ -60,30 +75,18 @@ def main():
     parsed_map_data = parse_data(puzzle_input)
 
     # calculate answer for part 1
-    answer = 0
-    for map_data in parsed_map_data:
-        x_reflection = get_x_reflection(map_data, 0)
-        if x_reflection:
-            answer += x_reflection
-            continue
-        y_reflection = get_y_reflection(map_data, 0)
-        if y_reflection:
-            answer += y_reflection * 100
-            continue
-    print("The answer for part 1 is {}".format(answer))
+    start = time.process_time()
+    answer = get_answer(parsed_map_data, 0)
+    execution_time = time.process_time() - start
+    print("Answer for part 1: {} (Execution time: {:.3f}ms)"
+          .format(answer, execution_time * 1000))
 
     # calculate answer for part 2
-    answer = 0
-    for map_data in parsed_map_data:
-        x_reflection = get_x_reflection(map_data, 1)
-        if x_reflection:
-            answer += x_reflection
-            continue
-        y_reflection = get_y_reflection(map_data, 1)
-        if y_reflection:
-            answer += y_reflection * 100
-            continue
-    print("The answer for part 2 is {}".format(answer))
+    start = time.process_time()
+    answer = get_answer(parsed_map_data, 2)
+    execution_time = time.process_time() - start
+    print("Answer for part 2: {} (Execution time: {:.3f}ms)"
+          .format(answer, execution_time * 1000))
 
 
 if __name__ == "__main__":
