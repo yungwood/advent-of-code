@@ -70,8 +70,6 @@ def main():
     # process puzzle input file
     with open(args.filename) as file:
         puzzle_input = file.read()
-
-    # parse ash/rock map data
     parsed_map_data = parse_data(puzzle_input)
 
     # calculate answer for part 1
@@ -83,7 +81,7 @@ def main():
 
     # calculate answer for part 2
     start = time.process_time()
-    answer = get_answer(parsed_map_data, 2)
+    answer = get_answer(parsed_map_data, 1)
     execution_time = time.process_time() - start
     print("Answer for part 2: {} (Execution time: {:.3f}ms)"
           .format(answer, execution_time * 1000))
