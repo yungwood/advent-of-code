@@ -59,8 +59,6 @@ def main():
     # parse ash/rock map data
     parsed_map_data = parse_data(puzzle_input)
 
-    print(parsed_map_data)
-
     # calculate answer for part 1
     answer = 0
     for index, map_data in enumerate(parsed_map_data, 1):
