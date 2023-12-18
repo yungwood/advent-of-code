@@ -8,7 +8,7 @@ direction_map = {
 }
 
 
-def djikstra(map_data, start_location=(0, 0), end_location=None,
+def dijsktra(map_data, start_location=(0, 0), end_location=None,
              length_min=0, length_max=0):
     x_max = len(map_data[0]) - 1
     y_max = len(map_data) - 1
@@ -17,7 +17,7 @@ def djikstra(map_data, start_location=(0, 0), end_location=None,
                      for _ in range(0, y_max + 1)]
     if not end_location:
         end_location = (x_max, y_max)
-    queue = [(0, (0, 0), (0, 0), 0)]
+    queue = [(0, start_location, (0, 0), 0)]
     while queue:
 
         item = heappop(queue)
@@ -87,11 +87,11 @@ def main():
         puzzle_input = file.read()
     map_data = process_map(puzzle_input)
     # calculate answer for part 1
-    answer1 = djikstra(map_data, length_max=3)
+    answer1 = dijsktra(map_data, length_max=3)
     print("Answer for Part 1:", answer1)
 
     # calculate answer for part 2
-    answer2 = djikstra(map_data, length_min=4, length_max=10)
+    answer2 = dijsktra(map_data, length_min=4, length_max=10)
     print("Answer for Part 2:", answer2)
 
 
