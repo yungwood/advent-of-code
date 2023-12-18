@@ -1,12 +1,10 @@
 import argparse
-# from functools import cache
 
 
-# @cache
 def trace_rays(map_data, start_location, start_step):
-    seen = []
-    illuminated = []
-    queue = [[start_location, start_step]]
+    seen = set()
+    illuminated = set()
+    queue = [(start_location, start_step)]
     while queue:
 
         # pop item off queue, make sure it's new
@@ -22,51 +20,53 @@ def trace_rays(map_data, start_location, start_step):
             continue
 
         # add to seen list
-        seen.append(ray)
+        seen.add(ray)
 
         # get char at location and step
         char = map_data[location[1]][location[0]]
         step = ray[1]
 
         # add current location to illuminated tiles
-        illuminated.append(tuple(location))
+        illuminated.add(location)
 
         # process char
         if char == "-" and step[1]:
-            new_location = [location[0] + 1, location[1]]
-            queue.append([new_location, [1, 0]])
-            new_location = [location[0] - 1, location[1]]
-            queue.append([new_location, [-1, 0]])
+            new_location = (location[0] + 1, location[1])
+            queue.append((new_location, (1, 0)))
+            new_location = (location[0] - 1, location[1])
+            queue.append((new_location, (-1, 0)))
             continue
         if char == "|" and step[0]:
-            new_location = [location[0], location[1] - 1]
-            queue.append([new_location, [0, -1]])
-            new_location = [location[0], location[1] + 1]
-            queue.append([new_location, [0, 1]])
+            new_location = (location[0], location[1] - 1)
+            queue.append((new_location, (0, -1)))
+            new_location = (location[0], location[1] + 1)
+            queue.append((new_location, (0, 1)))
             continue
         if char == "\\":
-            new_step = [step[1], step[0]]
-            new_location = [location[0] + new_step[0],
-                            location[1] + new_step[1]]
-            queue.append([new_location, new_step])
+            new_step = (step[1], step[0])
+            new_location = (location[0] + new_step[0],
+                            location[1] + new_step[1])
+            queue.append((new_location, new_step))
             continue
         if char == "/":
-            new_step = [step[1] * -1, step[0] * -1]
-            new_location = [location[0] + new_step[0],
-                            location[1] + new_step[1]]
-            queue.append([new_location, new_step])
+            new_step = (step[1] * -1, step[0] * -1)
+            new_location = (location[0] + new_step[0],
+                            location[1] + new_step[1])
+            queue.append((new_location, new_step))
             continue
+
         # must be continuing in same direction
-        new_location = [location[0] + step[0], location[1] + step[1]]
-        queue.append([new_location, step])
-    return set(illuminated)
+        new_location = (location[0] + step[0], location[1] + step[1])
+        queue.append((new_location, step))
+
+    return len(illuminated)
 
 
 def process_map(input):
     data = []
     for line in input.split('\n'):
-        data.append([*line])
-    return data
+        data.append(tuple([*line]))
+    return tuple(data)
 
 
 def main():
@@ -82,24 +82,22 @@ def main():
     map_data = process_map(puzzle_input)
 
     # calculate answer for part 1
-    illuminated = trace_rays(map_data, tuple([0, 0]), tuple([1, 0]))
-    answer1 = len(illuminated)
+    answer1 = trace_rays(map_data, (0, 0), (1, 0))
     print("Answer for Part 1:", answer1)
 
-    # part 2
-    # needs improving, takes a few minutes to calculate all paths
+    # calculate answer for part 2
     illuminated_counts = []
     # top row
     for x in range(0, len(map_data[0]) + 1):
-        illuminated = trace_rays(map_data, [x, 0], [0, 1])
-        illuminated_counts.append(len(illuminated))
-        illuminated = trace_rays(map_data, [x, len(map_data) - 1], [0, -1])
-        illuminated_counts.append(len(illuminated))
+        illuminated_counts.append(trace_rays(map_data, (x, 0), (0, 1)))
+        illuminated_counts.append(trace_rays(map_data,
+                                             (x, len(map_data) - 1),
+                                             (0, -1)))
     for y in range(0, len(map_data) + 1):
-        illuminated = trace_rays(map_data, [0, y], [1, 0])
-        illuminated_counts.append(len(illuminated))
-        illuminated = trace_rays(map_data, [len(map_data[0]) - 1, y], [-1, 0])
-        illuminated_counts.append(len(illuminated))
+        illuminated_counts.append(trace_rays(map_data, (0, y), (1, 0)))
+        illuminated_counts.append(trace_rays(map_data,
+                                             (len(map_data[0]) - 1, y),
+                                             (-1, 0)))
     answer2 = max(illuminated_counts)
     print("Answer for Part 2:", answer2)
 
