@@ -1,34 +1,25 @@
 package main
 
 import (
-	"github.com/yungwood/advent-of-code/2024/util"
+	"github.com/yungwood/advent-of-code/2024/test"
 	"testing"
 )
 
-func TestExample(t *testing.T) {
-	input := util.ReadFile("example.txt")
-	expected := 18
-	result := part1(input)
-	if result != expected {
-		t.Errorf("Part 1: Expected %d, got %d", expected, result)
-	}
-	expected = 9
-	result = part2(input)
-	if result != expected {
-		t.Errorf("Part 2: Expected %d, got %d", expected, result)
-	}
-}
+const exampleInput = `MMMSXXMASM
+MSAMXMSMSA
+AMXSXMAAMM
+MSAMASMSMX
+XMASAMXAMM
+XXAMMXXAMA
+SMSMSASXSS
+SAXAMASAAA
+MAMMMXMMMM
+MXMXAXMASX`
 
 func Test(t *testing.T) {
-	input := util.ReadFile("input.txt")
-	expected := 2464
-	result := part1(input)
-	if result != expected {
-		t.Errorf("Part 1: Expected %d, got %d", expected, result)
+	testCases := []test.TestCase{
+		{Input: exampleInput, Fn: part1, Answer: 18, Description: "Day 4 Part 1"},
+		{Input: exampleInput, Fn: part2, Answer: 9, Description: "Day 4 Part 2"},
 	}
-	expected = 1982
-	result = part2(input)
-	if result != expected {
-		t.Errorf("Part 2: Expected %d, got %d", expected, result)
-	}
+	test.RunTests(t, testCases)
 }

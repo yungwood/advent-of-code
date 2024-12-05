@@ -1,37 +1,17 @@
 package main
 
 import (
-	"github.com/yungwood/advent-of-code/2024/util"
+	"github.com/yungwood/advent-of-code/2024/test"
 	"testing"
 )
 
-func TestExample(t *testing.T) {
-	data := util.ReadFile("example1.txt")
-	expected := 161
-	result := part1(data)
-	if result != expected {
-		t.Errorf("Part 1: Expected %d, got %d", expected, result)
-	}
-	data = util.ReadFile("example2.txt")
-	expected = 48
-	result = part2(data)
-	if result != expected {
-		t.Errorf("Part 2: Expected %d, got %d", expected, result)
-	}
-
-}
+const exampleInput1 = `xmul(2,4)%&mul[3,7]!@^do_not_mul(5,5)+mul(32,64]then(mul(11,8)mul(8,5))`
+const exampleInput2 = `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`
 
 func Test(t *testing.T) {
-	data := util.ReadFile("input.txt")
-	expected := 166357705
-	result := part1(data)
-	if result != expected {
-		t.Errorf("Part 1: Expected %d, got %d", expected, result)
+	testCases := []test.TestCase{
+		{Input: exampleInput1, Fn: part1, Answer: 161, Description: "Day 3 Part 1"},
+		{Input: exampleInput2, Fn: part2, Answer: 48, Description: "Day 3 Part 2"},
 	}
-	expected = 88811886
-	result = part2(data)
-
-	if result != expected {
-		t.Errorf("Part 2: Expected %d, got %d", expected, result)
-	}
+	test.RunTests(t, testCases)
 }

@@ -12,18 +12,18 @@ import (
 func main() {
 	// read and parse input to lists
 	input := util.ReadFile("input.txt")
-	list1, list2 := parseInput(input)
 
 	// calculate part1
-	answer1 := part1(list1, list2)
+	answer1 := part1(input)
 	fmt.Println("The answer for part 1 is:", answer1)
 
 	// calculate part2
-	answer2 := part2(list1, list2)
+	answer2 := part2(input)
 	fmt.Println("The answer for part 2 is:", answer2)
 }
 
-func part1(list1, list2 []int) int {
+func part1(input string) int {
+	list1, list2 := parseInput(input)
 	// create a results array
 	results := make([]int, len(list1))
 	// calculate differences
@@ -33,7 +33,8 @@ func part1(list1, list2 []int) int {
 	return sumArray(results)
 }
 
-func part2(list1, list2 []int) int {
+func part2(input string) int {
+	list1, list2 := parseInput(input)
 	result := 0
 	for _, num := range list1 {
 		result += num * countOccurrences(num, list2)
