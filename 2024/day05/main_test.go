@@ -1,4 +1,4 @@
-package main
+package day05
 
 import (
 	"github.com/yungwood/advent-of-code/2024/test"
@@ -36,8 +36,8 @@ const exampleInput = `47|53
 
 func Test(t *testing.T) {
 	testCases := []test.TestCase{
-		{Input: exampleInput, Fn: part1, Answer: 143, Description: "Day 5 Part 1"},
-		{Input: exampleInput, Fn: part2, Answer: 123, Description: "Day 5 Part 2"},
+		{Input: exampleInput, Fn: Part1, Answer: 143, Description: "Day 5 Part 1"},
+		{Input: exampleInput, Fn: Part2, Answer: 123, Description: "Day 5 Part 2"},
 	}
 	test.RunTests(t, testCases)
 }

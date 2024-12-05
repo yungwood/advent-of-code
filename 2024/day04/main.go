@@ -1,21 +1,11 @@
-package main
+package day04
 
 import (
-	"fmt"
-	"strconv"
-
 	"github.com/yungwood/advent-of-code/2024/util"
+	"strconv"
 )
 
-func main() {
-	input := util.ReadFile("input.txt")
-	answer1 := part1(input)
-	fmt.Println("The answer for part 1 is:", answer1)
-	answer2 := part2(input)
-	fmt.Println("The answer for part 2 is:", answer2)
-}
-
-func part1(input string) int {
+func Part1(input string) int {
 	grid := util.ParseRuneGrid(input)
 	results := [][4]int{}
 	directions := [][2]int{
@@ -29,7 +19,7 @@ func part1(input string) int {
 	return len(results)
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	grid := util.ParseRuneGrid(input)
 	results := [][4]int{}
 	for y := 0; y < len(grid); y++ {

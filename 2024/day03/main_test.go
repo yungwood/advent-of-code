@@ -1,4 +1,4 @@
-package main
+package day03
 
 import (
 	"github.com/yungwood/advent-of-code/2024/test"
@@ -10,8 +10,8 @@ const exampleInput2 = `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)
 
 func Test(t *testing.T) {
 	testCases := []test.TestCase{
-		{Input: exampleInput1, Fn: part1, Answer: 161, Description: "Day 3 Part 1"},
-		{Input: exampleInput2, Fn: part2, Answer: 48, Description: "Day 3 Part 2"},
+		{Input: exampleInput1, Fn: Part1, Answer: 161, Description: "Day 3 Part 1"},
+		{Input: exampleInput2, Fn: Part2, Answer: 48, Description: "Day 3 Part 2"},
 	}
 	test.RunTests(t, testCases)
 }

@@ -1,21 +1,10 @@
-package main
+package day02
 
 import (
-	"fmt"
-
 	"github.com/yungwood/advent-of-code/2024/util"
 )
 
-func main() {
-	// read and parse input
-	input := util.ReadFile("input.txt")
-	answer1 := part1(input)
-	fmt.Println("The answer for part 1 is:", answer1)
-	answer2 := part2(input)
-	fmt.Println("The answer for part 2 is:", answer2)
-}
-
-func part1(input string) int {
+func Part1(input string) int {
 	count := 0
 	reactorReadings := util.ParseIntGrid(input, " ")
 	for _, item := range reactorReadings {
@@ -26,7 +15,7 @@ func part1(input string) int {
 	return count
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	count := 0
 	reactorReadings := util.ParseIntGrid(input, " ")
 	for _, item := range reactorReadings {
@@ -47,9 +36,7 @@ func isReactorSafeWithDampener(input []int) bool {
 		if isReactorSafe(combination) {
 			return true
 		}
-
 	}
-
 	return false
 }
 

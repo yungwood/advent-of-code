@@ -4,26 +4,25 @@ Here's my solutions to [Advent of Code 2024](https://adventofcode.com/2024) writ
 
 ## Structure
 
-Each day's solutions are stored in a separate folder, along with:
-- **`example.txt`** - the example input provided with the challenge
-- **`input.txt`** - my actual puzzle input
-- **`main.go`** - the solution for the challenge
-- **`main_test.go`** - tests to verify both example and actual inputs
+Each day's solutions are stored in separate packages. Tests are provided for each package using example input.
 
-There's also a `util` module with some common helper functions used across multiple solutions.
+There's also `test` and `util` modules with some common helper functions used across multiple solutions.
 
 ## How to run
 
-To run a solution for a given day:
-
 ```bash
-# run solution for day 1
-go run ./day01
+# solve day 1 (both parts)
+go run . --day 1 --input myinput.txt
 
-# test example and actual solutions for day 1
+# solve day 5 part 2 only
+go run . --day 1 --part 2 --input myinput.txt
+
+# run test for day 1
 go test ./day01
 
-# run tests for all days
-go test ./day...
-```
+# run all tests
+go test ./...
 
+# help
+go run . --help
+```

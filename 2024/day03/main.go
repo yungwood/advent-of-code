@@ -1,24 +1,12 @@
-package main
+package day03
 
 import (
-	"fmt"
 	"regexp"
 	"strconv"
 	"strings"
-
-	"github.com/yungwood/advent-of-code/2024/util"
 )
 
-func main() {
-	input := util.ReadFile("input.txt")
-	answer1 := part1(input)
-	fmt.Println("The answer for part 1 is:", answer1)
-
-	answer2 := part2(input)
-	fmt.Println("The answer for part 2 is:", answer2)
-}
-
-func part1(input string) int {
+func Part1(input string) int {
 	total := 0
 	instructions := getInstructions(input)
 	for _, instruction := range instructions {
@@ -27,7 +15,7 @@ func part1(input string) int {
 	return total
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	total := 0
 	instructions := getInstructions(input)
 	enabled := true

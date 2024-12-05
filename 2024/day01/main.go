@@ -1,28 +1,14 @@
-package main
+package day01
 
 import (
 	"fmt"
-	"github.com/yungwood/advent-of-code/2024/util"
 	"math"
 	"sort"
 	"strconv"
 	"strings"
 )
 
-func main() {
-	// read and parse input to lists
-	input := util.ReadFile("input.txt")
-
-	// calculate part1
-	answer1 := part1(input)
-	fmt.Println("The answer for part 1 is:", answer1)
-
-	// calculate part2
-	answer2 := part2(input)
-	fmt.Println("The answer for part 2 is:", answer2)
-}
-
-func part1(input string) int {
+func Part1(input string) int {
 	list1, list2 := parseInput(input)
 	// create a results array
 	results := make([]int, len(list1))
@@ -33,7 +19,7 @@ func part1(input string) int {
 	return sumArray(results)
 }
 
-func part2(input string) int {
+func Part2(input string) int {
 	list1, list2 := parseInput(input)
 	result := 0
 	for _, num := range list1 {
