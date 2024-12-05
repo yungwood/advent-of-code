@@ -1,0 +1,4 @@
+---
+include:
+  - project: gitlab/includes
+    file: python.yml
