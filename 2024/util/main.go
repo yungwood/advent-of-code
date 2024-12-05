@@ -68,3 +68,17 @@ func ParseRuneGrid(input string) [][]rune {
 func ParseChunks(input string) []string {
 	return strings.Split(input, "\n\n")
 }
+
+// MoveIntSlice moves an int within a slice from one index to another
+func MoveIntSlice(slice []int, from, to int) []int {
+	// get item to move
+	item := slice[from]
+	// remove item
+	slice = append(slice[:from], slice[from+1:]...)
+	// if new location is at end then append
+	if to >= len(slice) {
+		return append(slice, item)
+	}
+	// insert at new location
+	return append(slice[:to], append([]int{item}, slice[to:]...)...)
+}
