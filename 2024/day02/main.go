@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/yungwood/advent-of-code/2024/util"
 )
@@ -10,15 +9,15 @@ import (
 func main() {
 	// read and parse input
 	input := util.ReadFile("input.txt")
-	reactorReadings := parseInput(input)
-	answer1 := part1(reactorReadings)
+	answer1 := part1(input)
 	fmt.Println("The answer for part 1 is:", answer1)
-	answer2 := part2(reactorReadings)
+	answer2 := part2(input)
 	fmt.Println("The answer for part 2 is:", answer2)
 }
 
-func part1(reactorReadings [][]int) int {
+func part1(input string) int {
 	count := 0
+	reactorReadings := util.ParseIntGrid(input, " ")
 	for _, item := range reactorReadings {
 		if isReactorSafe(item) {
 			count++
@@ -27,24 +26,15 @@ func part1(reactorReadings [][]int) int {
 	return count
 }
 
-func part2(reactorReadings [][]int) int {
+func part2(input string) int {
 	count := 0
+	reactorReadings := util.ParseIntGrid(input, " ")
 	for _, item := range reactorReadings {
 		if isReactorSafeWithDampener(item) {
 			count++
 		}
 	}
 	return count
-}
-
-func parseInput(input string) [][]int {
-	lines := strings.Split(input, "\n")
-	reactorReadings := [][]int{}
-	for _, line := range lines {
-		row := util.ParseIntegerList(line)
-		reactorReadings = append(reactorReadings, row)
-	}
-	return reactorReadings
 }
 
 func isReactorSafeWithDampener(input []int) bool {

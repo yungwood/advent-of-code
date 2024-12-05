@@ -27,10 +27,10 @@ func ReadFile(filename string) string {
 	return strings.TrimRight(content, "\n")
 }
 
-// ParseIntegerList takes a string of space separated numbers
+// ParseIntegerList takes a string of delimited numbers
 // and returns an array of integers
-func ParseIntegerList(input string) []int {
-	items := strings.Split(input, " ")
+func ParseIntegerList(input, delimiter string) []int {
+	items := strings.Split(input, delimiter)
 	parsed := []int{}
 	for _, item := range items {
 		value, err := strconv.Atoi(item)
@@ -42,13 +42,29 @@ func ParseIntegerList(input string) []int {
 	return parsed
 }
 
+// ParseIntGrid takes lines of delimited numbers
+// and returns a grid of ints
+func ParseIntGrid(input, delimiter string) [][]int {
+	lines := strings.Split(input, "\n") // split lines
+	grid := make([][]int, len(lines))   // create grid
+	for i, line := range lines {
+		grid[i] = ParseIntegerList(line, delimiter)
+	}
+	return grid
+}
+
 // ParseRuneGrid takes a string with a grid and creates a 2d slice
 // of runes
 func ParseRuneGrid(input string) [][]rune {
 	lines := strings.Split(input, "\n") // split lines
-	grid := make([][]rune, len(lines))  // create grid of correct length
+	grid := make([][]rune, len(lines))  // create grid
 	for i, line := range lines {
 		grid[i] = []rune(line) // convert each line to slice of runes
 	}
 	return grid
+}
+
+// ParseChunks takes a string input and splits it by empty lines
+func ParseChunks(input string) []string {
+	return strings.Split(input, "\n\n")
 }
