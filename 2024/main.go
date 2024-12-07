@@ -3,14 +3,16 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"time"
+
 	"github.com/yungwood/advent-of-code/2024/day01"
 	"github.com/yungwood/advent-of-code/2024/day02"
 	"github.com/yungwood/advent-of-code/2024/day03"
 	"github.com/yungwood/advent-of-code/2024/day04"
 	"github.com/yungwood/advent-of-code/2024/day05"
+	"github.com/yungwood/advent-of-code/2024/day06"
 	"github.com/yungwood/advent-of-code/2024/util"
-	"os"
-	"time"
 )
 
 func main() {
@@ -31,6 +33,7 @@ func main() {
 		3: {1: day03.Part1, 2: day03.Part2},
 		4: {1: day04.Part1, 2: day04.Part2},
 		5: {1: day05.Part1, 2: day05.Part2},
+		6: {1: day06.Part1, 2: day06.Part2},
 	}
 
 	if day == 0 {
