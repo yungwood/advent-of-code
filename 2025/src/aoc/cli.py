@@ -57,11 +57,11 @@ def solve(day: int, part: str, filename: str) -> None:
     else:
         raise click.UsageError("No input provided (use --input or stdin)")
 
+    start_time = time.time()
     mod = load_day_module(day)
     logging.debug("Parse puzzle input")
     parsed = mod.parse(raw)
     logging.debug("Solve puzzle for day %d part %s", day, part)
-    start_time = time.time()
     if int(part) == 1:
         result = mod.part1(parsed)
     else:
@@ -69,8 +69,8 @@ def solve(day: int, part: str, filename: str) -> None:
     end_time = time.time()
     elapsed_time = end_time - start_time
 
-    click.echo(result)
-    message = f"Execution took {elapsed_time:.4f} seconds"
+    click.secho(result, fg="bright_white", bold=True)
+    message = f"Execution took {elapsed_time * 1000:.4f}ms"
     click.secho(message, fg="bright_black", bold=True)
 
 
