@@ -22,33 +22,26 @@ def parse(raw: str) -> ParsedInput:
 def part1(data: ParsedInput) -> int:
     max_joltage = 0
     for bank in data.banks:
-        max_joltage += find_max_joltage(bank.batteries, 2, [])
+        max_joltage += find_max_joltage(bank.batteries, 2)
     return max_joltage
 
 
 def part2(data: ParsedInput) -> int:
     max_joltage = 0
     for bank in data.banks:
-        max_joltage += find_max_joltage(bank.batteries, 12, [])
+        max_joltage += find_max_joltage(bank.batteries, 12)
     return max_joltage
 
 
-def find_max_joltage(bank: list[int], max_active: int, joltages: list[int]) -> int:
-    for i in range(9, -1, -1):
-        try:
-            index = bank.index(i)
-        except ValueError:
-            continue
-
-        if index > len(bank) - max_active + len(joltages):
-            continue
-
-        joltages.append(i)
-
-        if max_active == len(joltages):
-            max_joltage = "".join([str(i) for i in joltages])
-            return int(max_joltage)
-
-        return find_max_joltage(bank[index + 1 :], max_active, joltages)  # noqa: E203
-
-    raise LookupError("Finished walking tree with no result!")
+def find_max_joltage(bank: list[int], battery_count: int) -> int:
+    joltages = []
+    for i in range(battery_count - 1, -1, -1):
+        if i == 0:
+            haystack = bank
+        else:
+            haystack = bank[:-i]
+        joltages.append(max(haystack))
+        pos = bank.index(joltages[-1])
+        bank = bank[pos + 1 :]
+    max_joltage = "".join([str(i) for i in joltages])
+    return int(max_joltage)
