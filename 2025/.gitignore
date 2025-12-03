@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+*.py[codz]
+*$py.class
+
+.pdm-python
+.pdm-build/
+
+# ignore all but sample inputs
+inputs/*.txt
+!inputs/*.sample.txt
