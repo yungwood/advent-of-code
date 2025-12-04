@@ -66,6 +66,6 @@ def is_invalid_part2(num: int) -> bool:
 def all_chunks_equal(value: str, size: int):
     first = value[:size]
     for i in range(size, len(value), size):
-        if value[i : (i + size)] != first:  # noqa: E203
+        if value[i : (i + size)] != first:
             return False
     return True

@@ -25,6 +25,11 @@ TESTS = [
         expected_part1=357,
         expected_part2=3121910778619,
     ),
+    SampleCase(
+        day=4,
+        expected_part1=13,
+        expected_part2=43,
+    ),
 ]
 
 
