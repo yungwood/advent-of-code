@@ -1,15 +1,23 @@
-# Advent of Code 2025
+# Advent of Code
 
-Solutions for [Advent of Code 2025](https://adventofcode.com/2025) written in **Python**, with a small CLI tool for running individual days and parts.
+Solutions for [Advent of Code](https://adventofcode.com) written in **Python**, with a small CLI tool for running individual days and parts.
 
 ## Solutions
 
-Solutions for each day can be found in [`src/aoc/days/`](./src/aoc/days/).
+Solutions for each day can be found in [`aoc/solutions/`](./aoc/solutions/) with subfolders for each year.
 
-Each file contains 3 functions:
+Each day solutions file contains 3 functions:
 
 - `parse` for parsing puzzle input from a string
 - `part1` and `part2` for solving respective parts
+
+Each day solution file can be run as a standalone file with puzzle input provided via stdin.
+
+For example:
+
+```bash
+python3 aoc/2025/day01.py < input.txt
+```
 
 The `aoc` cli tool handles reading puzzle input from file/stdin and imports the day module based on flags provided.
 

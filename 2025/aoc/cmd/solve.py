@@ -4,11 +4,12 @@ import time
 
 import click
 
-from aoc.cmd.common import day_option, part_option
+from aoc.cmd.common import day_option, part_option, year_option
 from aoc.core import PROJECT_ROOT, load_day_module, load_input_file
 
 
 @click.command("solve")
+@year_option
 @day_option
 @part_option
 @click.option(
@@ -19,9 +20,9 @@ from aoc.core import PROJECT_ROOT, load_day_module, load_input_file
     default=None,
     help="Puzzle input file.",
 )
-def solve(day: int, part: str, filename: str) -> None:
+def solve(year: int, day: int, part: str, filename: str) -> None:
     """Run a given DAY and PART on a given input."""
-    click.secho(f"Solving day {day} part {part}", fg="blue")
+    click.secho(f"Solving {year} day {day} part {part}", fg="blue")
     if not sys.stdin.isatty():
         logging.debug("Reading input from stdin")
         stream = click.get_text_stream("stdin")
@@ -29,12 +30,12 @@ def solve(day: int, part: str, filename: str) -> None:
     elif filename:
         raw = load_input_file(filename)
     else:
-        raw = load_input_file(PROJECT_ROOT / f"inputs/day{day:02d}.sample.txt")
+        raw = load_input_file(PROJECT_ROOT / f"inputs/{year}/day{day:02d}.sample.txt")
     start_time = time.time()
-    mod = load_day_module(day)
-    logging.debug("Parse puzzle input for day %s")
+    mod = load_day_module(year, day)
+    logging.debug(f"Parse puzzle input for {year} day {day}")
     parsed = mod.parse(raw)
-    logging.debug("Solve puzzle for day %d part %s", day, part)
+    logging.debug(f"Solve puzzle for {year} day {day} part {part}")
     if int(part) == 1:
         result = mod.part1(parsed)
     else:

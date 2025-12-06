@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 import operator
+import sys
+from dataclasses import dataclass
 
 
 @dataclass
@@ -59,3 +60,14 @@ def part2(data: ParsedInput) -> int:
         answer = problem.solve(data.operations[i])
         total += answer
     return total
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

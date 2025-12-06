@@ -3,7 +3,7 @@ import textwrap
 
 import click
 
-from aoc.cmd.common import day_option
+from aoc.cmd.common import day_option, year_option
 from aoc.core import PROJECT_ROOT
 
 DAY_TEMPLATE = textwrap.dedent(
@@ -40,9 +40,10 @@ DAY_TEMPLATE = textwrap.dedent(
 
 @click.command()
 @day_option
-def scaffold(day: int):
+@year_option
+def scaffold(year: int, day: int):
     """Add boilerplate for a given DAY."""
-    solution_file = PROJECT_ROOT / f"src/aoc/days/day{day:02d}.py"
+    solution_file = PROJECT_ROOT / f"aoc/{year}/day{day:02d}.py"
     logging.debug("Adding solution file: %s", solution_file)
     if solution_file.exists():
         logging.error(f"Solutions file %s already exists!", solution_file)

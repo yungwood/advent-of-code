@@ -5,8 +5,8 @@ import sys
 import click
 
 from aoc.client import AoCClient
-from aoc.cmd.common import day_option
-from aoc.core import PROJECT_ROOT, load_input_file
+from aoc.cmd.common import day_option, year_option
+from aoc.core import PROJECT_ROOT
 
 
 @click.group(name="client")
@@ -26,19 +26,20 @@ def client(ctx, token):
             "No session token provided (use --token or set AOC_SESSION)"
         )
     ctx.ensure_object(dict)
-    ctx.obj["client"] = AoCClient(token)
+    ctx.obj["client"] = AoCClient(token=token)
     pass
 
 
 @client.command()
+@year_option
 @day_option
 @click.pass_context
-def input(ctx, day: int):
-    input_file = PROJECT_ROOT / f"inputs/day{day:02d}.txt"
+def input(ctx, year: int, day: int):
+    input_file = PROJECT_ROOT / f"inputs/{year}/day{day:02d}.txt"
     if input_file.exists():
         logging.error(f"Input file %s already exists!", input_file)
         sys.exit(1)
-    input = ctx.obj["client"].get_input(day)
+    input = ctx.obj["client"].get_input(year, day)
     input_file.write_text(input.rstrip("\n"))
 
 
@@ -46,7 +47,7 @@ def input(ctx, day: int):
 @day_option
 @click.pass_context
 def fetch(ctx, day: int):
-    sample_input_file = PROJECT_ROOT / f"inputs/day{day:02d}.sample.txt"
+    sample_input_file = PROJECT_ROOT / f"inputs/{year}/day{day:02d}.sample.txt"
     if sample_input_file.exists():
         logging.error(f"Sample input file %s already exists!", sample_input_file)
         sys.exit(1)

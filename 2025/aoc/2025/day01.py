@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 
 
@@ -70,3 +71,14 @@ def rotate_get_position(start: int, direction: str, clicks: int) -> int:
     if pos >= 100:
         pos = pos - 100
     return pos
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

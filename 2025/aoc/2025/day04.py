@@ -1,10 +1,10 @@
+import sys
 from dataclasses import dataclass
-from typing import List
 
 
 @dataclass
 class ParsedInput:
-    grid: List[List[str]]
+    grid: list[list[str]]
 
     @property
     def height(self) -> int:
@@ -29,8 +29,8 @@ class ParsedInput:
                     self.set_value(x, y, "x")
         return accessible_rolls
 
-    def get_neighbor_values(self, row: int, col: int) -> List[str]:
-        values: List[str] = []
+    def get_neighbor_values(self, row: int, col: int) -> list[str]:
+        values: list[str] = []
         for row_offset in (-1, 0, 1):
             for col_offset in (-1, 0, 1):
                 if row_offset == 0 and col_offset == 0:
@@ -70,3 +70,14 @@ def part2(data: ParsedInput) -> int:
         accessible_rolls = data.get_accessible_rolls(True)
         moved += accessible_rolls
     return moved
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 
 
@@ -45,3 +46,14 @@ def find_max_joltage(bank: list[int], battery_count: int) -> int:
         bank = bank[pos + 1 :]
     max_joltage = "".join([str(i) for i in joltages])
     return int(max_joltage)
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

@@ -24,8 +24,8 @@ TESTS = [
 
 @pytest.mark.parametrize("case", TESTS, ids=[c.day for c in TESTS])
 def test_day(case: SampleCase):
-    data = load_input_file(PROJECT_ROOT / f"inputs/day{case.day:02d}.sample.txt")
-    mod = load_day_module(case.day)
+    data = load_input_file(PROJECT_ROOT / f"inputs/2025/day{case.day:02d}.sample.txt")
+    mod = load_day_module(2025, case.day)
     parsed = mod.parse(data)
     assert mod.part1(parsed) == case.expected_part1
     assert mod.part2(parsed) == case.expected_part2

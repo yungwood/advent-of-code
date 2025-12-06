@@ -3,6 +3,19 @@ from datetime import date
 import click
 
 
+def year_option(fn):
+    default = date.today().year
+    if date.today().month < 12:
+        default = date.today().year - 1
+    return click.option(
+        "--year",
+        "-y",
+        type=click.IntRange(2015, default),
+        default=default,
+        show_default=True,
+    )(fn)
+
+
 def day_option(fn):
     default = 1
     if date.today().month == 12:

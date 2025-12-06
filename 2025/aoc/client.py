@@ -8,9 +8,7 @@ from typing import Literal, Optional
 import requests
 from bs4 import BeautifulSoup
 
-from aoc.core import PROJECT_ROOT, load_input_file
-
-AOC_BASE_URL = "https://adventofcode.com/2025"
+AOC_BASE_URL = "https://adventofcode.com"
 
 
 class AoCError(Exception):
@@ -41,16 +39,16 @@ class AoCClient:
         s.cookies.set("session", self.token, domain=".adventofcode.com")
         return s
 
-    def get_input(self, day: int) -> str:
-        url = f"{AOC_BASE_URL}/day/{day}/input"
+    def get_input(self, year: int, day: int) -> str:
+        url = f"{AOC_BASE_URL}/{year}/day/{day}/input"
         logging.debug(f"Fetching puzzle input from {url}")
         resp = self._session.get(url)
         if resp.status_code != 200:
             raise AoCError(f"Failed to fetch puzzle input (HTTP {resp.status_code})")
         return resp.text.rstrip("\n")
 
-    def get_puzzle(self, day: int) -> AoCPuzzle:
-        url = f"{AOC_BASE_URL}/day/{day}"
+    def get_puzzle(self, year: int, day: int) -> AoCPuzzle:
+        url = f"{AOC_BASE_URL}/{year}/day/{day}"
         logging.debug(f"Fetching puzzle from {url}")
         resp = self._session.get(url)
         if resp.status_code != 200:

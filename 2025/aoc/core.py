@@ -7,13 +7,13 @@ import logging
 import sys
 from pathlib import Path
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent.parent
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 
-def load_day_module(day: int):
-    day_str = f"day{day:02d}"
-    logging.debug("Loading module aoc.days.%s", day_str)
-    return importlib.import_module(f"aoc.days.{day_str}")
+def load_day_module(year: int, day: int):
+    module = f"aoc.{year}.day{day:02d}"
+    logging.debug(f"Loading module {module}")
+    return importlib.import_module(module)
 
 
 def load_input_file(filename) -> str:
