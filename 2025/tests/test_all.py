@@ -1,9 +1,8 @@
+from dataclasses import dataclass
+
 import pytest
 
-from dataclasses import dataclass
-from typing import Optional
-
-from aoc.core import load_day_module, load_input_file
+from aoc.core import PROJECT_ROOT, load_day_module, load_input_file
 
 
 @dataclass(frozen=True)
@@ -19,14 +18,13 @@ TESTS = [
     SampleCase(3, 357, 3121910778619),
     SampleCase(4, 13, 43),
     SampleCase(5, 3, 14),
+    SampleCase(6, 4277556, 3263827),
 ]
 
 
 @pytest.mark.parametrize("case", TESTS, ids=[c.day for c in TESTS])
 def test_day(case: SampleCase):
-    data = load_input_file(
-        f"inputs/day{case.day:02d}.sample.txt",
-    )
+    data = load_input_file(PROJECT_ROOT / f"inputs/day{case.day:02d}.sample.txt")
     mod = load_day_module(case.day)
     parsed = mod.parse(data)
     assert mod.part1(parsed) == case.expected_part1
