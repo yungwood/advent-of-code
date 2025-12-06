@@ -1,10 +1,10 @@
 import logging
-import sys
-import time
 
 import click
 
-from .core import load_day_module, load_input_file
+from aoc.cmd.client import client
+from aoc.cmd.scaffold import scaffold
+from aoc.cmd.solve import solve
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,52 +27,11 @@ def cli(debug):
         logging.debug("Debug logging enabled")
 
 
-@cli.command()
-@click.argument("day", type=int)
-@click.option(
-    "--part",
-    "-p",
-    type=click.Choice(["1", "2"]),
-    default="1",
-    show_default=True,
-    help="Which puzzle part to run.",
-)
-@click.option(
-    "--input",
-    "-i",
-    "filename",
-    type=str,
-    default=None,
-    show_default=True,
-    help="Puzzle input file.",
-)
-def solve(day: int, part: str, filename: str) -> None:
-    """Run a given DAY and PART on a given input."""
-
-    if not sys.stdin.isatty():
-        stream = click.get_text_stream("stdin")
-        raw = stream.read()
-    elif filename:
-        raw = load_input_file(filename)
-    else:
-        raise click.UsageError("No input provided (use --input or stdin)")
-
-    start_time = time.time()
-    mod = load_day_module(day)
-    logging.debug("Parse puzzle input")
-    parsed = mod.parse(raw)
-    logging.debug("Solve puzzle for day %d part %s", day, part)
-    if int(part) == 1:
-        result = mod.part1(parsed)
-    else:
-        result = mod.part2(parsed)
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-
-    click.secho(result, fg="bright_white", bold=True)
-    message = f"Execution took {elapsed_time * 1000:.4f}ms"
-    click.secho(message, fg="bright_black", bold=True)
+cli.add_command(client)
+cli.add_command(scaffold)
+cli.add_command(solve)
 
 
 def main():
+    click.secho("Advent of Code", fg="green", bold=True)
     cli(prog_name="aoc")  # pylint: disable=no-value-for-parameter
