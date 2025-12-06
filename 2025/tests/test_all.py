@@ -9,32 +9,16 @@ from aoc.core import load_day_module, load_input_file
 @dataclass(frozen=True)
 class SampleCase:
     day: int
-    expected_part1: Optional[int | str] = None
-    expected_part2: Optional[int | str] = None
+    expected_part1: int
+    expected_part2: int
 
 
 TESTS = [
-    SampleCase(day=1, expected_part1=3, expected_part2=6),
-    SampleCase(
-        day=2,
-        expected_part1=1227775554,
-        expected_part2=4174379265,
-    ),
-    SampleCase(
-        day=3,
-        expected_part1=357,
-        expected_part2=3121910778619,
-    ),
-    SampleCase(
-        day=4,
-        expected_part1=13,
-        expected_part2=43,
-    ),
-    SampleCase(
-        day=5,
-        expected_part1=3,
-        expected_part2=14,
-    ),
+    SampleCase(1, 3, 6),
+    SampleCase(2, 1227775554, 4174379265),
+    SampleCase(3, 357, 3121910778619),
+    SampleCase(4, 13, 43),
+    SampleCase(5, 3, 14),
 ]
 
 
@@ -45,7 +29,5 @@ def test_day(case: SampleCase):
     )
     mod = load_day_module(case.day)
     parsed = mod.parse(data)
-    if case.expected_part1 is not None:
-        assert mod.part1(parsed) == case.expected_part1
-    if case.expected_part2 is not None:
-        assert mod.part2(parsed) == case.expected_part2
+    assert mod.part1(parsed) == case.expected_part1
+    assert mod.part2(parsed) == case.expected_part2
