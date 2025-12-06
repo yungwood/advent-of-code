@@ -43,7 +43,10 @@ DAY_TEMPLATE = textwrap.dedent(
 @year_option
 def scaffold(year: int, day: int):
     """Add boilerplate for a given DAY."""
-    solution_file = PROJECT_ROOT / f"aoc/{year}/day{day:02d}.py"
+    year_folder = PROJECT_ROOT / f"aoc/{year}"
+    if not year_folder.exists():
+        year_folder.mkdir(parents=True, exist_ok=True)
+    solution_file = year_folder / f"day{day:02d}.py"
     logging.debug("Adding solution file: %s", solution_file)
     if solution_file.exists():
         logging.error(f"Solutions file %s already exists!", solution_file)

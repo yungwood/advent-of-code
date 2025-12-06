@@ -35,7 +35,11 @@ def client(ctx, token):
 @day_option
 @click.pass_context
 def input(ctx, year: int, day: int):
-    input_file = PROJECT_ROOT / f"inputs/{year}/day{day:02d}.txt"
+    year_folder = PROJECT_ROOT / f"aoc/{year}"
+    if not year_folder.exists():
+        year_folder.mkdir(parents=True, exist_ok=True)
+        (year_folder / "__init__.py").touch(exist_ok=True)
+    input_file = year_folder / f"inputs/day{day:02d}.txt"
     if input_file.exists():
         logging.error(f"Input file %s already exists!", input_file)
         sys.exit(1)
@@ -44,10 +48,15 @@ def input(ctx, year: int, day: int):
 
 
 @client.command()
+@year_option
 @day_option
 @click.pass_context
-def fetch(ctx, day: int):
-    sample_input_file = PROJECT_ROOT / f"inputs/{year}/day{day:02d}.sample.txt"
+def fetch(ctx, year: int, day: int):
+    year_folder = PROJECT_ROOT / f"aoc/{year}"
+    if not year_folder.exists():
+        year_folder.mkdir(parents=True, exist_ok=True)
+        (year_folder / "__init__.py").touch(exist_ok=True)
+    sample_input_file = year_folder / f"inputs/day{day:02d}.sample.txt"
     if sample_input_file.exists():
         logging.error(f"Sample input file %s already exists!", sample_input_file)
         sys.exit(1)

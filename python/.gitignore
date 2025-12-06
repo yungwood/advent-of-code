@@ -7,5 +7,5 @@ __pycache__/
 .pdm-build/
 
 # ignore all but sample inputs
-inputs/*/*.txt
-!inputs/*/*.sample.txt
+aoc/*/inputs/*.txt
+!aoc/*/inputs/*.sample.txt
