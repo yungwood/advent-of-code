@@ -49,6 +49,10 @@ def get_sample_input_file(year: int, day: int) -> Path:
     return get_inputs_folder(year) / f"day{day:02d}.sample.txt"
 
 
+def get_tests_file() -> Path:
+    return PROJECT_ROOT / "tests/sample_cases.txt"
+
+
 def get_cache_folder() -> Path:
     cache_folder = PROJECT_ROOT / ".cache"
     if not cache_folder.exists():
