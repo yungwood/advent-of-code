@@ -1,6 +1,6 @@
-# Advent of Code
+# Advent of Code Solutions in Python
 
-Solutions for [Advent of Code](https://adventofcode.com) written in **Python**, with a small CLI tool for running individual days and parts.
+Solutions for [Advent of Code](https://adventofcode.com) written in **Python**, plus a small CLI tool to help with development.
 
 ## Solutions
 
@@ -16,14 +16,17 @@ Each day solution file can be run as a standalone file with puzzle input provide
 For example:
 
 ```bash
+# find solutions for 2025 day 1
 python3 2025/day01.py < input.txt
 ```
 
+## Advent of Code CLI
+
 The `aoc` cli tool handles reading puzzle input from file/stdin and imports the day module based on flags provided. It also handles fetching puzzle text, inputs and storing them locally.
 
-## Getting Started
+### Getting Started
 
-### Setup development environment
+Setup development environment:
 
 ```bash
 # setup venv
@@ -31,19 +34,19 @@ make dev
 source .venv/bin/activate
 ```
 
-### Lint
+Run linting:
 
 ```bash
 make lint
 ```
 
-### Run Tests
+Run tests:
 
 ```bash
 make test
 ```
 
-## Using the CLI
+### Using the CLI
 
 Solve a given day with optional flags:
 
