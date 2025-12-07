@@ -4,7 +4,7 @@ Solutions for [Advent of Code](https://adventofcode.com) written in **Python**, 
 
 ## Solutions
 
-Solutions for each day can be found in [`aoc/solutions/`](./aoc/solutions/) with subfolders for each year.
+Solutions for each day can be found in the subfolders for each year.
 
 Each day solutions file contains 3 functions:
 
@@ -16,10 +16,10 @@ Each day solution file can be run as a standalone file with puzzle input provide
 For example:
 
 ```bash
-python3 aoc/2025/day01.py < input.txt
+python3 2025/day01.py < input.txt
 ```
 
-The `aoc` cli tool handles reading puzzle input from file/stdin and imports the day module based on flags provided.
+The `aoc` cli tool handles reading puzzle input from file/stdin and imports the day module based on flags provided. It also handles fetching puzzle text, inputs and storing them locally.
 
 ## Getting Started
 
@@ -48,12 +48,16 @@ make test
 Solve a given day with optional flags:
 
 ```bash
-# Solve day 1 part 2 using an input file
-aoc solve 1 --part 2 --input myinput.txt
+# solve today's puzzle part 1 (or 1st day puzzle if current month is not December)
+# if no input provided via stdin or --file, will attempt to load sample input
+aoc solve
+
+# Solve day 1 part 2 specifying an input file
+aoc solve --day 1 --part 2 --input input.txt
 
 # Pipe input from stdin
-cat myinput.txt | aoc solve 2
+aoc solve --d2 < input.txt
 
 # Enable debug logging
-aoc --debug solve 3
+aoc --debug solve -d3 -p2
 ```
