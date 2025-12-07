@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 from typing import Callable
 
@@ -69,3 +70,14 @@ def all_chunks_equal(value: str, size: int):
         if value[i : (i + size)] != first:
             return False
     return True
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

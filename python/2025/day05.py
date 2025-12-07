@@ -1,3 +1,4 @@
+import sys
 from dataclasses import dataclass
 
 
@@ -52,3 +53,14 @@ def part1(data: ParsedInput) -> int:
 def part2(data: ParsedInput) -> int:
     data.dedupe_ranges()
     return sum(r.size() for r in data.ranges)
+
+
+if __name__ == "__main__":
+    raw = sys.stdin.read()
+    if not raw:
+        print("No input received on stdin.")
+        sys.exit(1)
+
+    data = parse(raw)
+    print("Part 1:", part1(data))
+    print("Part 2:", part2(data))

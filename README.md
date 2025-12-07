@@ -6,6 +6,6 @@ This repo contains my solutions for [Advent of Code](https://adventofcode.com). 
 
 - **[2023](2023/)** - solutions written in **Python**
 - **[2024](2024/)** - solutions written in **Go**
-- **[2025](2025/)** - solutions written in **Python**
+- **[2025](python/)** - solutions written in **Python**
 
 Check each folder for readme with additional info.
