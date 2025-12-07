@@ -1,12 +1,26 @@
-from datetime import date
+from datetime import datetime
 
 import click
+import pytz
+
+TARGET_TIMEZONE = pytz.timezone("America/New_York")
+
+
+def nocache_option(fn):
+    return click.option(
+        "--no-cache",
+        "-f",
+        is_flag=True,
+        default=False,
+        help="Bypass cache and pull from AoC",
+    )(fn)
 
 
 def year_option(fn):
-    default = date.today().year
-    if date.today().month < 12:
-        default = date.today().year - 1
+    date = datetime.now(TARGET_TIMEZONE).date()
+    default = date.year
+    if date.month < 12:
+        default = date.year - 1
     return click.option(
         "--year",
         "-y",
@@ -17,9 +31,10 @@ def year_option(fn):
 
 
 def day_option(fn):
+    date = datetime.now(TARGET_TIMEZONE).date()
     default = 1
-    if date.today().month == 12:
-        default = min(date.today().day, 12)
+    if date.month == 12:
+        default = min(date.day, 12)
     return click.option(
         "--day",
         "-d",

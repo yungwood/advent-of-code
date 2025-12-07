@@ -1,8 +1,9 @@
+import importlib
 from dataclasses import dataclass
 
 import pytest
 
-from aoc.core import PROJECT_ROOT, load_day_module, load_input_file
+from aoc.tools.files import get_sample_input_file, load_text_file
 
 
 @dataclass(frozen=True)
@@ -23,12 +24,10 @@ TESTS = [
 ]
 
 
-@pytest.mark.parametrize("case", TESTS, ids=[f"{c.year} day {c.day}" for c in TESTS])
-def test_day(case: SampleCase):
-    data = load_input_file(
-        PROJECT_ROOT / f"aoc/{case.year}/inputs/day{case.day:02d}.sample.txt"
-    )
-    mod = load_day_module(2025, case.day)
+@pytest.mark.parametrize("case", TESTS, ids=[f"{c.year}.day{c.day:02d}" for c in TESTS])
+def test(case: SampleCase, request):
+    data = load_text_file(get_sample_input_file(case.year, case.day))
+    mod = importlib.import_module(request.node.callspec.id)
     parsed = mod.parse(data)
     assert mod.part1(parsed) == case.expected_part1
     assert mod.part2(parsed) == case.expected_part2

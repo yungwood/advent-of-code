@@ -1,10 +1,10 @@
+import importlib
 import logging
+import pkgutil
 
 import click
 
-from aoc.cmd.client import client
-from aoc.cmd.scaffold import scaffold
-from aoc.cmd.solve import solve
+import aoc.cmd as cmd_pkg
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,11 +27,16 @@ def cli(debug):
         logging.debug("Debug logging enabled")
 
 
-cli.add_command(client)
-cli.add_command(scaffold)
-cli.add_command(solve)
+def load_commands():
+    for module_info in pkgutil.iter_modules(cmd_pkg.__path__):
+        module_name = module_info.name
+        module = importlib.import_module(f"{cmd_pkg.__name__}.{module_name}")
+        if hasattr(module, module_name):
+            obj = getattr(module, module_name)
+            if isinstance(obj, click.core.Command):
+                cli.add_command(obj)
 
 
 def main():
-    click.secho("Advent of Code", fg="green", bold=True)
+    load_commands()
     cli(prog_name="aoc")  # pylint: disable=no-value-for-parameter
