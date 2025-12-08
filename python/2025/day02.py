@@ -1,39 +1,30 @@
 import sys
-from dataclasses import dataclass
 from typing import Callable
 
-
-@dataclass
-class Range:
-    first: int
-    last: int
-
-
-@dataclass
-class ParsedInput:
-    ranges: list[Range]
+Range = tuple[int, int]
+ParsedInput = list[Range]
 
 
 def parse(raw: str) -> ParsedInput:
     puzzle_input = raw.split(",")
-    parsed = ParsedInput(ranges=[])
+    parsed = ParsedInput([])
     for item in puzzle_input:
         values = item.split("-")
-        parsed.ranges.append(Range(first=int(values[0]), last=int(values[1])))
+        parsed.append(Range([int(values[0]), int(values[1])]))
     return parsed
 
 
 def part1(data: ParsedInput) -> int:
     invalid = []
-    for item in data.ranges:
-        invalid.extend(invalid_ids(item.first, item.last, is_invalid_part1))
+    for item in data:
+        invalid.extend(invalid_ids(item[0], item[1], is_invalid_part1))
     return sum(invalid)
 
 
 def part2(data: ParsedInput) -> int:
     invalid = []
-    for item in data.ranges:
-        invalid.extend(invalid_ids(item.first, item.last, is_invalid_part2))
+    for item in data:
+        invalid.extend(invalid_ids(item[0], item[1], is_invalid_part2))
     return sum(invalid)
 
 

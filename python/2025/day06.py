@@ -2,51 +2,47 @@ import operator
 import sys
 from dataclasses import dataclass
 
-
-@dataclass
-class Problem:
-    numbers: list[int]
-
-    def solve(self, operation: str) -> int:
-        ops = {
-            "+": operator.add,
-            "-": operator.sub,
-            "*": operator.mul,
-            "/": operator.truediv,
-        }
-        result = self.numbers[0]
-        for i in self.numbers[1:]:
-            result = ops[operation](result, i)
-
-        return result
+Problem = list[int]
 
 
 @dataclass
 class ParsedInput:
-    operations: list[str]
     lines: list[str]
+    operations: list[str]
 
 
 def parse(raw: str) -> ParsedInput:
     lines = raw.splitlines()
     operations = lines[-1].split()
-    return ParsedInput(operations=operations, lines=lines[:-1])
+    return ParsedInput(lines[:-1], operations)
 
 
 def part1(data: ParsedInput) -> int:
     total = 0
-    values = []
-    for line in data.lines:
-        values.append(i for i in line.split())
-    columns = [col for col in zip(*values)]
-    for i, column in enumerate(columns):
-        total += Problem(numbers=[int(v) for v in column]).solve(data.operations[i])
+    problems = lines_to_problems_part1(data.lines)
+    for problem, op in zip(problems, data.operations):
+        total += solve(problem, op)
     return total
 
 
 def part2(data: ParsedInput) -> int:
     total = 0
-    columns = ["".join(col) for col in zip(*data.lines)]
+    problems = lines_to_problems_part2(data.lines)
+    for problem, op in zip(problems, data.operations):
+        answer = solve(problem, op)
+        total += answer
+    return total
+
+
+def lines_to_problems_part1(lines: list[str]) -> list[Problem]:
+    values = []
+    for line in lines:
+        values.append([int(i) for i in line.split()])
+    return [Problem(col) for col in zip(*values)]
+
+
+def lines_to_problems_part2(lines: list[str]) -> list[Problem]:
+    columns = ["".join(col) for col in zip(*lines)]
     problems = []
     numbers = []
     for column in columns:
@@ -56,10 +52,21 @@ def part2(data: ParsedInput) -> int:
         else:
             numbers.append(int(column))
     problems.append(Problem(numbers))
-    for i, problem in enumerate(problems):
-        answer = problem.solve(data.operations[i])
-        total += answer
-    return total
+    return problems
+
+
+def solve(problem: Problem, operation: str) -> int:
+    ops = {
+        "+": operator.add,
+        "-": operator.sub,
+        "*": operator.mul,
+        "/": operator.truediv,
+    }
+    result = problem[0]
+    for i in problem[1:]:
+        result = ops[operation](result, i)
+
+    return result
 
 
 if __name__ == "__main__":

@@ -19,17 +19,6 @@ class ParsedInput:
     ranges: list[Range]
     values: list[int]
 
-    def dedupe_ranges(self):
-        deduped = []
-        ranges = sorted(self.ranges, key=lambda x: x.start)
-        for r in ranges:
-            if not deduped or not deduped[-1].contains(r.start):
-                deduped.append(r)
-            else:
-                last = deduped[-1]
-                last.end = max([last.end, r.end])
-        self.ranges = deduped
-
 
 def parse(raw: str) -> ParsedInput:
     inputs = raw.split("\n\n")
@@ -42,17 +31,29 @@ def parse(raw: str) -> ParsedInput:
 
 
 def part1(data: ParsedInput) -> int:
-    data.dedupe_ranges()
+    ranges = dedupe_ranges(data.ranges)
     good = 0
     for value in data.values:
-        if any(r.contains(value) for r in data.ranges):
+        if any(r.contains(value) for r in ranges):
             good += 1
     return good
 
 
 def part2(data: ParsedInput) -> int:
-    data.dedupe_ranges()
-    return sum(r.size() for r in data.ranges)
+    ranges = dedupe_ranges(data.ranges)
+    return sum(r.size() for r in ranges)
+
+
+def dedupe_ranges(ranges: list[Range]):
+    deduped = []
+    ranges = sorted(ranges, key=lambda x: x.start)
+    for r in ranges:
+        if not deduped or not deduped[-1].contains(r.start):
+            deduped.append(r)
+        else:
+            last = deduped[-1]
+            last.end = max([last.end, r.end])
+    return deduped
 
 
 if __name__ == "__main__":

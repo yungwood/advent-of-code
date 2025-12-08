@@ -53,15 +53,8 @@ def calculate_all_distances(boxes: list[Location]) -> dict:
     distances = {}
     n = len(boxes)
     for i in range(n):
-        for j in range(n):
-            if j == i:
-                continue
-            elif j > i:
-                if not (i, j) in distances:
-                    distances[i, j] = calculate_distance(boxes[i], boxes[j])
-            elif i > j:
-                if not (j, i) in distances:
-                    distances[j, i] = calculate_distance(boxes[i], boxes[j])
+        for j in range(i + 1, n):
+            distances[i, j] = calculate_distance(boxes[i], boxes[j])
     return dict(sorted(distances.items(), key=lambda item: item[1]))
 
 

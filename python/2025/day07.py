@@ -1,21 +1,17 @@
 import sys
-from dataclasses import dataclass
 
-
-@dataclass
-class ParsedInput:
-    grid: list[str]
+ParsedInput = list[str]
 
 
 def parse(raw: str) -> ParsedInput:
-    return ParsedInput(grid=raw.splitlines())
+    return raw.splitlines()
 
 
 def part1(data: ParsedInput) -> int:
     splits = 0
-    tachyons = {data.grid[0].find("S")}
+    tachyons = {data[0].find("S")}
 
-    for row in data.grid[1:]:
+    for row in data[1:]:
         new_tachyons = set(tachyons)
         for i in tachyons:
             if row[i] == "^":
@@ -28,7 +24,7 @@ def part1(data: ParsedInput) -> int:
 
 
 def part2(data: ParsedInput) -> int:
-    start_tachyon = data.grid[0].find("S")
+    start_tachyon = data[0].find("S")
     cache: dict[tuple[int, int], int] = {}
 
     def count_paths(tachyon: int, index: int) -> int:
@@ -36,11 +32,11 @@ def part2(data: ParsedInput) -> int:
         if key in cache:
             return cache[key]
 
-        if index == len(data.grid) - 1:
+        if index == len(data) - 1:
             cache[key] = 1
             return 1
 
-        if data.grid[index][tachyon] == "^":
+        if data[index][tachyon] == "^":
             value = count_paths(tachyon - 1, index + 1)
             value += count_paths(tachyon + 1, index + 1)
         else:

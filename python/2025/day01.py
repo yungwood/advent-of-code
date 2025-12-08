@@ -1,36 +1,25 @@
 import sys
 from dataclasses import dataclass
 
-
-@dataclass
-class Rotation:
-    direction: str
-    clicks: int
-
-
-@dataclass
-class ParsedInput:
-    rotations: list[Rotation]
+Rotation = tuple[int, str]
+ParsedInput = list[Rotation]
 
 
 def parse(raw: str) -> ParsedInput:
     puzzle_input = raw.splitlines()
-    parsed = ParsedInput(rotations=[])
+    parsed = ParsedInput([])
     for line in puzzle_input:
         direction = line[:1]
         clicks = int(line[1:])
-        parsed.rotations.append(Rotation(direction=direction, clicks=clicks))
+        parsed.append(Rotation([clicks, direction]))
     return parsed
 
 
 def part1(data: ParsedInput) -> int | str:
     pos = 50
     count = 0
-    for rotation in data.rotations:
-        clicks = rotation.clicks
-        pos = rotate_get_position(
-            start=pos, direction=rotation.direction, clicks=clicks
-        )
+    for rotation in data:
+        pos = rotate_get_position(pos, rotation[0], rotation[1])
         if pos == 0:
             count += 1
     return count
@@ -39,17 +28,14 @@ def part1(data: ParsedInput) -> int | str:
 def part2(data: ParsedInput) -> int | str:
     pos = 50
     count = 0
-    for rotation in data.rotations:
-        clicks = rotation.clicks
+    for clicks, direction in data:
         if clicks >= 100:
             count += clicks // 100
-        newpos = rotate_get_position(
-            start=pos, direction=rotation.direction, clicks=clicks
-        )
-        if rotation.direction == "R" and newpos < pos:
+        newpos = rotate_get_position(pos, clicks, direction)
+        if direction == "R" and newpos < pos:
             if pos != 0:
                 count += 1
-        elif rotation.direction == "L" and newpos > pos:
+        elif direction == "L" and newpos > pos:
             if pos != 0:
                 count += 1
         elif newpos == 0 and clicks > 0:
@@ -58,9 +44,9 @@ def part2(data: ParsedInput) -> int | str:
     return count
 
 
-def rotate_get_position(start: int, direction: str, clicks: int) -> int:
+def rotate_get_position(start: int, clicks: int, direction: str) -> int:
     pos = start
-    if clicks > 100:
+    if clicks >= 100:
         clicks = clicks % 100
     if direction == "R":
         pos += clicks
