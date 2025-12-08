@@ -35,7 +35,8 @@ def puzzle(year: int, day: int, part: int, no_cache: bool):
 @day_option
 @year_option
 def input(year: int, day: int):
-    """Fetch puzzle input for a given day and part."""
+    """Fetch puzzle inputs for a given day and part."""
+    fetch_sample_input(year, day)
     fetch_puzzle_input(year, day)
 
 

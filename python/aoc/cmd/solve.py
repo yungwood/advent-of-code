@@ -30,6 +30,7 @@ from aoc.tools.files import get_input_file, get_sample_input_file, load_text_fil
 )
 def solve(year: int, day: int, part: str, filename: str, real_input: bool) -> None:
     """Run a given YEAR, DAY and PART on a given or saved input."""
+    start_time = time.time()
     if not sys.stdin.isatty():
         logging.debug("Reading input from stdin")
         stream = click.get_text_stream("stdin")
@@ -41,7 +42,6 @@ def solve(year: int, day: int, part: str, filename: str, real_input: bool) -> No
     else:
         raw = load_text_file(get_sample_input_file(year, day))
     click.secho(f"Solution for AoC {year} day {day} part {part}", fg="blue")
-    start_time = time.time()
     try:
         mod = importlib.import_module(f"{year}.day{day:02d}")
     except ModuleNotFoundError:
