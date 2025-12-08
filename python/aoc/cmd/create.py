@@ -1,7 +1,3 @@
-import ast
-import logging
-import textwrap
-
 import click
 
 from aoc.cmd.common import day_option, year_option
@@ -10,12 +6,12 @@ from aoc.tools.scaffold import create_solution_boilerplate
 from aoc.tools.testing import SampleCase, upsert_test_case
 
 
-@click.group()
-def create():
+@click.group("create")
+def cmd_create():
     pass
 
 
-@create.command("solution")
+@cmd_create.command("solution")
 @day_option
 @year_option
 def create_solution(year: int, day: int):
@@ -23,7 +19,7 @@ def create_solution(year: int, day: int):
     create_solution_boilerplate(year, day)
 
 
-@create.command("test")
+@cmd_create.command("test")
 @day_option
 @year_option
 def create_test(year: int, day: int):

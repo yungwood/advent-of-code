@@ -45,19 +45,16 @@ class AoCClient:
         filename = path.replace("/", "_")
         cache_file = get_cache_folder() / f"{filename}.html"
         if cache_file.exists() and not ignore_cache:
-            logging.debug(f"Reading cached result from {cache_file}")
+            logging.debug("Reading cached result from %s", cache_file)
             return load_text_file(cache_file)
-        else:
-            url = f"{AOC_BASE_URL}/{path}"
-            logging.debug(f"Fetching {url}")
-            resp = self._session.get(url)
-            if resp.status_code != 200:
-                raise AoCError(
-                    f"Failed to fetch puzzle input (HTTP {resp.status_code})"
-                )
-            body = resp.text
-            logging.debug(f"Caching result to {cache_file}")
-            cache_file.write_text(body)
+        url = f"{AOC_BASE_URL}/{path}"
+        logging.debug("Fetching %s", url)
+        resp = self._session.get(url)
+        if resp.status_code != 200:
+            raise AoCError(f"Failed to fetch puzzle input (HTTP {resp.status_code})")
+        body = resp.text
+        logging.debug("Caching result to %s", cache_file)
+        cache_file.write_text(body)
         return body
 
     def get_input(self, year: int, day: int) -> str:

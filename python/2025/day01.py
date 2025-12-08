@@ -1,5 +1,4 @@
 import sys
-from dataclasses import dataclass
 
 Rotation = tuple[int, str]
 ParsedInput = list[Rotation]

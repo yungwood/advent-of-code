@@ -28,7 +28,7 @@ from aoc.tools.files import get_input_file, get_sample_input_file, load_text_fil
     default=False,
     help="Default to real puzzle input file.",
 )
-def solve(year: int, day: int, part: str, filename: str, real_input: bool) -> None:
+def cmd_solve(year: int, day: int, part: int, filename: str, real_input: bool) -> None:
     """Run a given YEAR, DAY and PART on a given or saved input."""
     start_time = time.time()
     if not sys.stdin.isatty():
@@ -47,10 +47,10 @@ def solve(year: int, day: int, part: str, filename: str, real_input: bool) -> No
     except ModuleNotFoundError:
         click.secho(f"Module not found at {year}/day{day:02d}.py", fg="red")
         sys.exit(1)
-    logging.debug(f"Parse puzzle input for {year} day {day}")
+    logging.debug("Parse puzzle input for %d day %d", year, day)
     parsed = mod.parse(raw)
-    logging.debug(f"Solve puzzle for {year} day {day} part {part}")
-    if int(part) == 1:
+    logging.debug("Solve puzzle for %d day %d part %d", year, day, part)
+    if part == 1:
         result = mod.part1(parsed)
     else:
         result = mod.part2(parsed)

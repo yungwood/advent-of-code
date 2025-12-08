@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from aoc.tools.files import get_tests_file, load_text_file
+from aoc.tools.files import get_tests_file
 
 
 @dataclass(frozen=True)
@@ -17,7 +17,6 @@ class SampleCase:
 
 def load_test_cases() -> list[SampleCase]:
     cases: list[SampleCase] = []
-
     for raw in get_tests_file().read_text().splitlines():
         line = raw.split("#", 1)[0].strip()
         if not line:
@@ -25,7 +24,6 @@ def load_test_cases() -> list[SampleCase]:
 
         year, day, ans1, ans2 = map(int, line.split())
         cases.append(SampleCase(year, day, ans1, ans2))
-
     return cases
 
 
@@ -40,9 +38,6 @@ def write_test_cases(cases: list[SampleCase]) -> None:
 
 def upsert_test_case(case: SampleCase) -> None:
     tests = load_test_cases()
-    for test in tests:
-        if test.year == case.year and test.day == case.day:
-            tests.remove(test)
-            break
+    tests = [t for t in tests if not (t.year == case.year and t.day == case.day)]
     tests.append(case)
     write_test_cases(tests)

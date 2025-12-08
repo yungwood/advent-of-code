@@ -31,8 +31,9 @@ def load_commands():
     for module_info in pkgutil.iter_modules(cmd_pkg.__path__):
         module_name = module_info.name
         module = importlib.import_module(f"{cmd_pkg.__name__}.{module_name}")
-        if hasattr(module, module_name):
-            obj = getattr(module, module_name)
+        function_name = f"cmd_{module_name}"
+        if hasattr(module, function_name):
+            obj = getattr(module, function_name)
             if isinstance(obj, click.core.Command):
                 cli.add_command(obj)
 

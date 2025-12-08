@@ -48,8 +48,8 @@ def part_option(fn):
     return click.option(
         "--part",
         "-p",
-        type=click.Choice(["1", "2"]),
-        default="1",
+        type=click.IntRange(1, 2),
+        default=1,
         show_default=True,
         help="Which puzzle part to run.",
     )(fn)
